@@ -5,6 +5,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import { lint } from 'markdownlint/promise';
+import { applyFixes } from 'markdownlint';
 import { createLinkPatternRule } from './index.mjs';
 
 const exampleRule = createLinkPatternRule('no-example-com', 'No example.com');
@@ -240,5 +241,75 @@ describe('skipRegex option', () => {
       configNoSkip,
     );
     assert.strictEqual(errors.length, 1);
+  });
+});
+
+describe('replace option (fix support)', () => {
+  const httpRule = createLinkPatternRule('no-http', 'Use https');
+
+  it('should include fixInfo when replace is configured', async () => {
+    const config = {
+      default: false,
+      'no-http': {
+        regex: 'http://',
+        message: 'Use https instead of http',
+        replace: 'https://',
+      },
+    };
+    const errors = await lintContent(
+      '[link](http://example.com)',
+      [httpRule],
+      config,
+    );
+    assert.strictEqual(errors.length, 1);
+    assert.ok(errors[0].fixInfo);
+    assert.strictEqual(errors[0].fixInfo.deleteCount, 7);
+    assert.strictEqual(errors[0].fixInfo.insertText, 'https://');
+  });
+
+  it('should apply fix correctly', async () => {
+    const config = {
+      default: false,
+      'no-http': {
+        regex: 'http://',
+        message: 'Use https',
+        replace: 'https://',
+      },
+    };
+    const content = '[link](http://example.com)';
+    const results = await lint({
+      strings: { test: content },
+      customRules: [httpRule],
+      config,
+    });
+    const errors = results.test || [];
+    assert.strictEqual(errors.length, 1);
+    const fixed = applyFixes(content, errors);
+    assert.strictEqual(fixed, '[link](https://example.com)');
+  });
+
+  it('should replace external URL prefix with relative path', async () => {
+    const rule = createLinkPatternRule(
+      'no-otel-external',
+      'Use relative path',
+    );
+    const config = {
+      default: false,
+      'no-otel-external': {
+        regex: 'https?://(?:www\\.)?opentelemetry\\.io/',
+        message: 'Use site-relative path',
+        replace: '/',
+      },
+    };
+    const content = '[docs](https://www.opentelemetry.io/docs/getting-started)';
+    const results = await lint({
+      strings: { test: content },
+      customRules: [rule],
+      config,
+    });
+    const errors = results.test || [];
+    assert.strictEqual(errors.length, 1);
+    const fixed = applyFixes(content, errors);
+    assert.strictEqual(fixed, '[docs](/docs/getting-started)');
   });
 });

@@ -6,6 +6,24 @@
 
 import { filterByTypes } from 'markdownlint-rule-helpers/micromark';
 
+/**
+ * Get 1-based column where the match starts in the line.
+ * @param {object} token - Micromark token with startLine, startColumn, text
+ * @param {number} matchIndex - Offset of match within token.text
+ * @param {object} params - Rule params with lines
+ * @returns {number | null} 1-based column, or null if cannot determine
+ */
+function getEditColumn(token, matchIndex, params) {
+  if (token.startColumn != null) {
+    return token.startColumn + matchIndex;
+  }
+  const line = params.lines?.[token.startLine - 1];
+  if (!line) return null;
+  const contentStart = line.indexOf(token.text);
+  if (contentStart < 0) return null;
+  return contentStart + matchIndex + 1;
+}
+
 const linkTokenTypes = /** @type {any} */ ([
   'resourceDestinationString', // inline link [text](url) or image ![alt](url)
   'definitionDestinationString', // reference definition [label]: url
@@ -23,6 +41,7 @@ const linkTokenTypes = /** @type {any} */ ([
  *     regex: 'pattern'
  *     message: 'Error message'
  *     skipRegex: 'pattern'  # optional; URLs matching this are skipped
+ *     replace: 'replacement'  # optional; when set, enables --fix (supports $1, $2 for capture groups)
  *
  * @param {string} name - rule identifier (used in markdownlint-disable directives)
  * @param {string} description - human-readable rule description
@@ -35,7 +54,7 @@ export function createLinkPatternRule(name, description) {
     tags: ['custom', 'links', 'validation'],
     parser: 'micromark',
     function: function (params, onError) {
-      const { regex, message, skipRegex } = params.config;
+      const { regex, message, skipRegex, replace } = params.config;
       const missing = [!regex && 'regex', !message && 'message'].filter(
         Boolean,
       );
@@ -66,11 +85,24 @@ export function createLinkPatternRule(name, description) {
         while ((match = compiled.exec(content)) !== null) {
           const contextStart = Math.max(0, match.index - 20);
           const contextEnd = match.index + match[0].length + 20;
-          onError({
+          const errorInfo = {
             lineNumber: token.startLine,
             detail: message,
             context: content.substring(contextStart, contextEnd),
-          });
+          };
+          if (replace != null) {
+            const editColumn = getEditColumn(token, match.index, params);
+            if (editColumn != null) {
+              const insertText = match[0].replace(new RegExp(regex), replace);
+              errorInfo.fixInfo = {
+                lineNumber: token.startLine,
+                editColumn,
+                deleteCount: match[0].length,
+                insertText,
+              };
+            }
+          }
+          onError(errorInfo);
         }
       }
     },
