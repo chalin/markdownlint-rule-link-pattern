@@ -64,11 +64,11 @@ no-example-com:
 Each rule instance reads its configuration from the markdownlint config under
 its rule name:
 
-| Property | Type | Required | Description |
-| --- | --- | --- | --- |
-| `regex` | string | yes | Regex pattern to match against link URLs. |
-| `message` | string | yes | Error message shown when a link matches. |
-| `skipRegex` | string | no | URLs matching this regex are skipped. |
+| Property    | Type   | Required | Description                               |
+| ----------- | ------ | -------- | ----------------------------------------- |
+| `regex`     | string | yes      | Regex pattern to match against link URLs. |
+| `message`   | string | yes      | Error message shown when a link matches.  |
+| `skipRegex` | string | no       | URLs matching this regex are skipped.     |
 
 ### Example with `skipRegex`
 

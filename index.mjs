@@ -36,7 +36,9 @@ export function createLinkPatternRule(name, description) {
     parser: 'micromark',
     function: function (params, onError) {
       const { regex, message, skipRegex } = params.config;
-      const missing = [!regex && 'regex', !message && 'message'].filter(Boolean);
+      const missing = [!regex && 'regex', !message && 'message'].filter(
+        Boolean,
+      );
       if (missing.length) {
         onError({
           lineNumber: 1,

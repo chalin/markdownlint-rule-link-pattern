@@ -51,4 +51,5 @@ When moving to TypeScript:
 [opentelemetry.io]: https://github.com/open-telemetry/opentelemetry.io
 [Docsy]: https://github.com/google/docsy
 [docsy-pkg]: https://github.com/google/docsy/blob/main/package.json
-[npm-prepare]: https://docs.npmjs.com/cli/v10/using-npm/scripts#prepare-and-prepublish
+[npm-prepare]:
+  https://docs.npmjs.com/cli/v10/using-npm/scripts#prepare-and-prepublish

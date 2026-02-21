@@ -131,7 +131,7 @@ See [example][] for details.
     assert.strictEqual(errors[0].ruleNames[0], 'no-example-com');
   });
 
-  it('should be independently disableable per rule', async () => {
+  it('should allow each rule to be disabled independently', async () => {
     const configWithDisable = {
       ...config,
       'no-example-com': false,
