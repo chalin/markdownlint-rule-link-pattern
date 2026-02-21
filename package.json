@@ -1,0 +1,37 @@
+{
+  "name": "markdownlint-rule-link-pattern",
+  "version": "0.1.0",
+  "description": "A markdownlint rule factory for validating link URLs against regex patterns",
+  "license": "Apache-2.0",
+  "author": "chalin",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chalin/markdownlint-rule-link-pattern.git"
+  },
+  "homepage": "https://github.com/chalin/markdownlint-rule-link-pattern",
+  "bugs": "https://github.com/chalin/markdownlint-rule-link-pattern/issues",
+  "type": "module",
+  "exports": "./index.mjs",
+  "scripts": {
+    "test": "node --test"
+  },
+  "files": [
+    "index.mjs",
+    "LICENSE",
+    "README.md"
+  ],
+  "keywords": [
+    "markdownlint-rule",
+    "markdownlint",
+    "markdown",
+    "links",
+    "lint"
+  ],
+  "peerDependencies": {
+    "markdownlint-rule-helpers": ">=0.27.0"
+  },
+  "devDependencies": {
+    "markdownlint": "^0.40.0",
+    "markdownlint-rule-helpers": "^0.30.0"
+  }
+}
