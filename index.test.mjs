@@ -31,11 +31,11 @@ describe('createLinkPatternRule', () => {
   const config = {
     default: false,
     'no-example-com': {
-      regex: 'example\\.com',
+      pattern: 'example\\.com',
       message: 'Do not link to example.com',
     },
     'no-localhost': {
-      regex: 'localhost',
+      pattern: 'localhost',
       message: 'Do not link to localhost',
     },
   };
@@ -148,7 +148,7 @@ See [example][] for details.
 });
 
 describe('missing config warning', () => {
-  it('should warn when regex is missing', async () => {
+  it('should warn when pattern is missing', async () => {
     const config = {
       default: false,
       'no-example-com': {
@@ -162,14 +162,14 @@ describe('missing config warning', () => {
     );
     assert.strictEqual(errors.length, 1);
     assert.strictEqual(errors[0].lineNumber, 1);
-    assert.ok(errors[0].errorDetail.includes('regex'));
+    assert.ok(errors[0].errorDetail.includes('pattern'));
   });
 
   it('should warn when message is missing', async () => {
     const config = {
       default: false,
       'no-example-com': {
-        regex: 'example\\.com',
+        pattern: 'example\\.com',
       },
     };
     const errors = await lintContent(
@@ -182,7 +182,7 @@ describe('missing config warning', () => {
     assert.ok(errors[0].errorDetail.includes('message'));
   });
 
-  it('should warn when both regex and message are missing', async () => {
+  it('should warn when both pattern and message are missing', async () => {
     const config = {
       default: false,
       'no-example-com': {},
@@ -194,22 +194,22 @@ describe('missing config warning', () => {
     );
     assert.strictEqual(errors.length, 1);
     assert.strictEqual(errors[0].lineNumber, 1);
-    assert.ok(errors[0].errorDetail.includes('regex'));
+    assert.ok(errors[0].errorDetail.includes('pattern'));
     assert.ok(errors[0].errorDetail.includes('message'));
   });
 });
 
-describe('skipRegex option', () => {
+describe('skip_regex option', () => {
   const configWithSkip = {
     default: false,
     'no-example-com': {
-      regex: 'example\\.com',
+      pattern: 'example\\.com',
       message: 'Do not link to example.com',
-      skipRegex: 'staging\\.',
+      skip_regex: 'staging\\.',
     },
   };
 
-  it('should skip URLs matching skipRegex', async () => {
+  it('should skip URLs matching skip_regex', async () => {
     const errors = await lintContent(
       '[link](https://staging.example.com/page)',
       [exampleRule],
@@ -218,7 +218,7 @@ describe('skipRegex option', () => {
     assert.strictEqual(errors.length, 0);
   });
 
-  it('should still flag URLs not matching skipRegex', async () => {
+  it('should still flag URLs not matching skip_regex', async () => {
     const errors = await lintContent(
       '[link](https://example.com/page)',
       [exampleRule],
@@ -227,11 +227,11 @@ describe('skipRegex option', () => {
     assert.strictEqual(errors.length, 1);
   });
 
-  it('should flag all matching URLs when skipRegex is not set', async () => {
+  it('should flag all matching URLs when skip_regex is not set', async () => {
     const configNoSkip = {
       default: false,
       'no-example-com': {
-        regex: 'example\\.com',
+        pattern: 'example\\.com',
         message: 'Do not link to example.com',
       },
     };
@@ -251,7 +251,7 @@ describe('replace option (fix support)', () => {
     const config = {
       default: false,
       'no-http': {
-        regex: 'http://',
+        pattern: 'http://',
         message: 'Use https instead of http',
         replace: 'https://',
       },
@@ -271,7 +271,7 @@ describe('replace option (fix support)', () => {
     const config = {
       default: false,
       'no-http': {
-        regex: 'http://',
+        pattern: 'http://',
         message: 'Use https',
         replace: 'https://',
       },
@@ -289,14 +289,11 @@ describe('replace option (fix support)', () => {
   });
 
   it('should replace external URL prefix with relative path', async () => {
-    const rule = createLinkPatternRule(
-      'no-otel-external',
-      'Use relative path',
-    );
+    const rule = createLinkPatternRule('no-otel-external', 'Use relative path');
     const config = {
       default: false,
       'no-otel-external': {
-        regex: 'https?://(?:www\\.)?opentelemetry\\.io/',
+        pattern: 'https?://(?:www\\.)?opentelemetry\\.io/',
         message: 'Use site-relative path',
         replace: '/',
       },

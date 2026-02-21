@@ -51,11 +51,11 @@ In `.markdownlint.yaml`:
 
 ```yaml
 no-http-urls:
-  regex: 'http://(?!localhost)'
+  pattern: 'http://(?!localhost)'
   message: Use https instead of http.
 
 no-example-com:
-  regex: 'example\.com'
+  pattern: 'example\.com'
   message: Do not link to example.com.
 ```
 
@@ -64,22 +64,22 @@ no-example-com:
 Each rule instance reads its configuration from the markdownlint config under
 its rule name:
 
-| Property    | Type   | Required | Description                                                                 |
-| ----------- | ------ | -------- | --------------------------------------------------------------------------- |
-| `regex`     | string | yes      | Regex pattern to match against link URLs.                                    |
-| `message`   | string | yes      | Error message shown when a link matches.                                    |
-| `skipRegex` | string | no       | URLs matching this regex are skipped.                                      |
-| `replace`   | string | no       | Replacement text; when set, enables `--fix` (supports `$1`, `$2` for captures). |
+| Property     | Type   | Required | Description                                                                     |
+| ------------ | ------ | -------- | ------------------------------------------------------------------------------- |
+| `pattern`    | string | yes      | Regex pattern to match against link URLs.                                       |
+| `message`    | string | yes      | Error message shown when a link matches.                                        |
+| `skip_regex` | string | no       | URLs matching this regex are skipped.                                           |
+| `replace`    | string | no       | Replacement text; when set, enables `--fix` (supports `$1`, `$2` for captures). |
 
-### Example with `skipRegex`
+### Example with `skip_regex`
 
 To skip URLs containing template directives (e.g., Hugo `{{ }}`):
 
 ```yaml
 no-example-com:
-  regex: 'example\.com'
+  pattern: 'example\.com'
   message: Do not link to example.com.
-  skipRegex: '\{\{.*\}\}'
+  skip_regex: '\{\{.*\}\}'
 ```
 
 ### Example with `replace` (auto-fix)
@@ -88,12 +88,12 @@ To enable `markdownlint --fix` for a rule, add `replace`:
 
 ```yaml
 no-http-urls:
-  regex: 'http://'
+  pattern: 'http://'
   message: Use https instead of http.
   replace: 'https://'
 
 no-otel-external-urls:
-  regex: 'https?://(?:www\.)?opentelemetry\.io/'
+  pattern: 'https?://(?:www\.)?opentelemetry\.io/'
   message: Use site-relative path.
   replace: '/'
 ```

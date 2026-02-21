@@ -38,9 +38,9 @@ const linkTokenTypes = /** @type {any} */ ([
  * Config shape (in .markdownlint.yaml):
  *
  *   rule-name:
- *     regex: 'pattern'
+ *     pattern: 'regex'
  *     message: 'Error message'
- *     skipRegex: 'pattern'  # optional; URLs matching this are skipped
+ *     skip_regex: 'pattern'  # optional; URLs matching this are skipped
  *     replace: 'replacement'  # optional; when set, enables --fix (supports $1, $2 for capture groups)
  *
  * @param {string} name - rule identifier (used in markdownlint-disable directives)
@@ -54,8 +54,8 @@ export function createLinkPatternRule(name, description) {
     tags: ['custom', 'links', 'validation'],
     parser: 'micromark',
     function: function (params, onError) {
-      const { regex, message, skipRegex, replace } = params.config;
-      const missing = [!regex && 'regex', !message && 'message'].filter(
+      const { pattern, message, skip_regex, replace } = params.config;
+      const missing = [!pattern && 'pattern', !message && 'message'].filter(
         Boolean,
       );
       if (missing.length) {
@@ -66,8 +66,8 @@ export function createLinkPatternRule(name, description) {
         return;
       }
 
-      const compiled = new RegExp(regex, 'g');
-      const skip = skipRegex ? new RegExp(skipRegex) : null;
+      const compiled = new RegExp(pattern, 'g');
+      const skip = skip_regex ? new RegExp(skip_regex) : null;
 
       const linkDestinations = filterByTypes(
         params.parsers.micromark.tokens,
@@ -93,7 +93,7 @@ export function createLinkPatternRule(name, description) {
           if (replace != null) {
             const editColumn = getEditColumn(token, match.index, params);
             if (editColumn != null) {
-              const insertText = match[0].replace(new RegExp(regex), replace);
+              const insertText = match[0].replace(new RegExp(pattern), replace);
               errorInfo.fixInfo = {
                 lineNumber: token.startLine,
                 editColumn,
