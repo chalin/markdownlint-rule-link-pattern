@@ -1,2 +1,4 @@
 default: true
-MD013: false # line length
+line-length: false
+no-duplicate-heading:
+  siblings_only: true # allow duplicate headings in CHANGELOG (Added, Changed, etc.)

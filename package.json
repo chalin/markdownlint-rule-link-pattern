@@ -1,6 +1,6 @@
 {
   "name": "markdownlint-rule-link-pattern",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A markdownlint rule factory for validating link URLs against regex patterns",
   "license": "Apache-2.0",
   "author": "chalin",
@@ -29,7 +29,8 @@
   "files": [
     "index.mjs",
     "LICENSE",
-    "README.md"
+    "README.md",
+    "CHANGELOG.md"
   ],
   "keywords": [
     "markdownlint-rule",
@@ -43,10 +44,11 @@
   },
   "devDependencies": {
     "cspell": "^9.6.4",
-    "markdownlint": "^0.40.0",
     "markdownlint-cli2": "^0.21.0",
-    "prettier": "3.8.1",
     "markdownlint-rule-helpers": "^0.30.0",
-    "npm-check-updates": "^19.4.1"
+    "markdownlint-rule-no-shortcut-ref-link": "github:chalin/markdownlint-rule-no-shortcut-ref-link#v0.2.0",
+    "markdownlint": "^0.40.0",
+    "npm-check-updates": "^19.4.1",
+    "prettier": "3.8.1"
   }
 }

@@ -1,5 +1,8 @@
 ignores:
   - '**/node_modules/**'
 
+customRules:
+  - markdownlint-rule-no-shortcut-ref-link
+
 config:
   extends: .markdownlint.yaml

@@ -18,7 +18,7 @@ npm install markdownlint-rule-link-pattern --save-dev
 From GitHub directly:
 
 ```sh
-npm install github:chalin/markdownlint-rule-link-pattern#semver:0.1.0 --save-dev
+npm install github:chalin/markdownlint-rule-link-pattern#semver:0.2.0 --save-dev
 ```
 
 ## Usage
