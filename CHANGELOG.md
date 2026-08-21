@@ -6,7 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.2.0][] - 2025-02-21
+## [0.3.0][] - 2026-08-21
+
+### Changed
+
+- **Breaking:** Renamed the package to `@pchalin/markdownlint-rule-link-pattern`
+  for publication to the npm registry under the `@pchalin` scope. The unscoped
+  registry name is npm-security-held following a malicious squat
+  ([GHSA-q3xp-j858-q9xf](https://github.com/advisories/GHSA-q3xp-j858-q9xf)) and
+  is not used by this project.
+
+## [0.2.0][] - 2026-02-21
 
 ### Added
 
@@ -18,7 +28,7 @@ and this project adheres to
 - **Breaking:** Renamed config key `regex` to `pattern`.
 - **Breaking:** Renamed config key `skipRegex` to `skip_regex`.
 
-## [0.1.0][] - 2025-02-21
+## [0.1.0][] - 2026-02-21
 
 ### Added
 
@@ -27,6 +37,8 @@ and this project adheres to
   validate link URLs against regex patterns.
 - Config: `pattern`, `message`, `skip_regex` (optional).
 
+[0.3.0]:
+  https://github.com/chalin/markdownlint-rule-link-pattern/compare/v0.2.0...v0.3.0
 [0.2.0]:
   https://github.com/chalin/markdownlint-rule-link-pattern/compare/v0.1.0...v0.2.0
 [0.1.0]:

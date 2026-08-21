@@ -1,4 +1,4 @@
-# markdownlint-rule-link-pattern
+# @pchalin/markdownlint-rule-link-pattern
 
 > A [markdownlint][] rule factory for validating link URLs against regex
 > patterns.
@@ -7,18 +7,15 @@ Each call to `createLinkPatternRule()` produces an markdownlint rule that can be
 independently configured and disabled, and that flags link URLs matching a given
 regex.
 
+> [!IMPORTANT] This package is published to npm **only** under the scoped name
+> `@pchalin/markdownlint-rule-link-pattern`. The unscoped registry name is not
+> ours and was once used for malware ([GHSA-q3xp-j858-q9xf][]); never install
+> it.
+
 ## Install
 
-From npm (once published):
-
 ```sh
-npm install markdownlint-rule-link-pattern --save-dev
-```
-
-From GitHub directly:
-
-```sh
-npm install github:chalin/markdownlint-rule-link-pattern#semver:0.2.0 --save-dev
+npm install @pchalin/markdownlint-rule-link-pattern --save-dev
 ```
 
 ## Usage
@@ -28,7 +25,7 @@ npm install github:chalin/markdownlint-rule-link-pattern#semver:0.2.0 --save-dev
 Create a file (e.g., `link-rules.mjs`) that defines your rules:
 
 ```js
-import { createLinkPatternRule } from 'markdownlint-rule-link-pattern';
+import { createLinkPatternRule } from '@pchalin/markdownlint-rule-link-pattern';
 
 export default [
   createLinkPatternRule('no-http-urls', 'Flag non-HTTPS URLs'),
@@ -112,4 +109,5 @@ The rule checks all link-like tokens produced by the micromark parser:
 
 [Apache-2.0](LICENSE)
 
+[GHSA-q3xp-j858-q9xf]: https://github.com/advisories/GHSA-q3xp-j858-q9xf
 [markdownlint]: https://github.com/DavidAnson/markdownlint
