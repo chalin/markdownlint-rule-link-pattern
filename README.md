@@ -7,6 +7,7 @@ Each call to `createLinkPatternRule()` produces an markdownlint rule that can be
 independently configured and disabled, and that flags link URLs matching a given
 regex.
 
+<!-- prettier-ignore -->
 > [!IMPORTANT]
 > This package is published to npm **only** under the scoped name
 > `@pchalin/markdownlint-rule-link-pattern`. The unscoped registry name is not
