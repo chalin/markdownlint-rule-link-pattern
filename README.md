@@ -3,7 +3,7 @@
 > A [markdownlint][] rule factory for validating link URLs against regex
 > patterns.
 
-Each call to `createLinkPatternRule()` produces an markdownlint rule that can be
+Each call to `createLinkPatternRule()` produces a markdownlint rule that can be
 independently configured and disabled, and that flags link URLs matching a given
 regex.
 

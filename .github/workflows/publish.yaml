@@ -11,7 +11,8 @@ permissions: {}
 
 jobs:
   publish:
-    # A prerelease would land on the default dist-tag.
+    # Skip prereleases: npm >= 11 refuses to publish them without an explicit
+    # --tag, so a prerelease release event would only produce a failed run.
     if: ${{ !github.event.release.prerelease }}
     runs-on: ubuntu-latest
     environment: npm-publish
@@ -24,8 +25,12 @@ jobs:
         with:
           node-version: 24
           registry-url: https://registry.npmjs.org
-      - name: Check that the release tag matches the package version
+      - name: Check that the release tag matches the package version and name
         run: |
+          # Pre-rename tags carry the unscoped (security-held) name; never
+          # publish it.
+          name=$(node -p 'require("./package.json").name')
+          test "$name" = "@pchalin/markdownlint-rule-link-pattern"
           version=$(node -p 'require("./package.json").version')
           test "$GITHUB_REF_NAME" = "v$version"
       # No install or checks: `test` already gates every push, and publishing
