@@ -1,6 +1,6 @@
 {
-  "name": "markdownlint-rule-link-pattern",
-  "version": "0.2.0",
+  "name": "@pchalin/markdownlint-rule-link-pattern",
+  "version": "0.3.0",
   "description": "A markdownlint rule factory for validating link URLs against regex patterns",
   "license": "Apache-2.0",
   "author": "chalin",
@@ -12,19 +12,22 @@
   "bugs": "https://github.com/chalin/markdownlint-rule-link-pattern/issues",
   "type": "module",
   "exports": "./index.mjs",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
-    "check:format": "npx prettier --check .",
-    "check:markdown": "npx markdownlint-cli2 \"**/*.md\"",
-    "check:spelling": "npx cspell --no-progress \"**/*.{md,mjs}\"",
+    "check:format": "prettier --check .",
+    "check:markdown": "markdownlint-cli2 \"**/*.md\"",
+    "check:spelling": "cspell --no-progress \"**/*.{md,mjs}\"",
     "check": "npm run check:format && npm run check:markdown && npm run check:spelling",
-    "fix:format": "npx prettier --write .",
+    "fix:format": "prettier --write .",
     "fix:markdown": "npm run check:markdown -- --fix",
     "fix": "npm run fix:format && npm run fix:markdown",
     "test-and-check": "npm run test-only && npm run check",
     "test-and-fix": "npm run fix && npm run test-and-check",
     "test-only": "node --test",
     "test": "npm run test-and-check",
-    "update:packages": "npx npm-check-updates --dep dev,optional -u"
+    "update:packages": "npm-check-updates --dep dev,optional -u"
   },
   "files": [
     "index.mjs",
@@ -46,7 +49,7 @@
     "cspell": "^9.6.4",
     "markdownlint-cli2": "^0.21.0",
     "markdownlint-rule-helpers": "^0.30.0",
-    "markdownlint-rule-no-shortcut-ref-link": "github:chalin/markdownlint-rule-no-shortcut-ref-link#v0.2.0",
+    "markdownlint-rule-no-shortcut-ref-link": "^0.4.0",
     "markdownlint": "^0.40.0",
     "npm-check-updates": "^19.4.1",
     "prettier": "3.8.1"

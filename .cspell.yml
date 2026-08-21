@@ -4,6 +4,8 @@ words:
   - autolinks
   - chalin
   - Docsy
+  - GHSA
   - markdownlint
   - micromark
   - nvmrc
+  - pchalin

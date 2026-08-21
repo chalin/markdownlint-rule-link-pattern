@@ -1,0 +1,45 @@
+name: publish
+
+# Registered npm-side as this repo + filename + environment; renames break
+# publishing.
+
+on:
+  release:
+    types: [published]
+
+permissions: {}
+
+jobs:
+  publish:
+    # Skip prereleases: npm >= 11 refuses to publish them without an explicit
+    # --tag, so a prerelease release event would only produce a failed run.
+    if: ${{ !github.event.release.prerelease }}
+    runs-on: ubuntu-latest
+    environment: npm-publish
+    permissions:
+      contents: read
+      id-token: write # OIDC trusted publishing + provenance
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          fetch-depth: 0 # the on-main guard needs history
+      - name: Check that the release commit is on main
+        run: git merge-base --is-ancestor "$GITHUB_SHA" origin/main
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - name: Check that the release tag matches the package version and name
+        run: |
+          # Pre-rename tags carry the unscoped (security-held) name; never
+          # publish it.
+          name=$(node -p 'require("./package.json").name')
+          test "$name" = "@pchalin/markdownlint-rule-link-pattern"
+          version=$(node -p 'require("./package.json").version')
+          test "$GITHUB_REF_NAME" = "v$version"
+      # No install or checks: `test` already gates every push to main, and
+      # publishing needs no node_modules, so no registry-delivered code runs
+      # with id-token authority.
+      # The owner's 2FA approval on npmjs.com is the proof-of-presence OIDC
+      # alone can't provide.
+      - run: npm stage publish --ignore-scripts
