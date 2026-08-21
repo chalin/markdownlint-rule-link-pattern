@@ -7,8 +7,8 @@ Each call to `createLinkPatternRule()` produces an markdownlint rule that can be
 independently configured and disabled, and that flags link URLs matching a given
 regex.
 
-<!-- prettier-ignore -->
 > [!IMPORTANT]
+>
 > This package is published to npm **only** under the scoped name
 > `@pchalin/markdownlint-rule-link-pattern`. The unscoped registry name is not
 > ours and was once used for malware ([GHSA-q3xp-j858-q9xf][]); never install
@@ -111,5 +111,7 @@ The rule checks all link-like tokens produced by the micromark parser:
 
 [Apache-2.0](LICENSE)
 
+<!-- prettier-ignore-start -->
 [GHSA-q3xp-j858-q9xf]: https://github.com/advisories/GHSA-q3xp-j858-q9xf
 [markdownlint]: https://github.com/DavidAnson/markdownlint
+<!-- prettier-ignore-end -->
