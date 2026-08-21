@@ -9,10 +9,9 @@ regex.
 
 > [!IMPORTANT]
 >
-> This package is published to npm **only** under the scoped name
-> `@pchalin/markdownlint-rule-link-pattern`. The unscoped registry name is not
-> ours and was once used for malware ([GHSA-q3xp-j858-q9xf][]); never install
-> it.
+> This package is published to npm **only** under the `@pchalin` scope. The
+> unscoped name is not ours and was once used for malware
+> ([GHSA-q3xp-j858-q9xf][]); never install it.
 
 ## Install
 

@@ -9,10 +9,9 @@ The format is based on [Keep a Changelog][], and this project adheres to
 
 ### Changed
 
-- **Breaking:** Renamed the package to `@pchalin/markdownlint-rule-link-pattern`
-  for publication to the npm registry under the `@pchalin` scope. The unscoped
-  registry name is npm-security-held following a malicious squat
-  ([GHSA-q3xp-j858-q9xf][]) and is not used by this project.
+- **Breaking:** Renamed the package to
+  `@pchalin/markdownlint-rule-link-pattern`: the unscoped npm name is
+  security-held after a malicious squat ([GHSA-q3xp-j858-q9xf][]).
 
 ## [0.2.0][] - 2026-02-21
 
