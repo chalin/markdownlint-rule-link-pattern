@@ -47,7 +47,7 @@
   },
   "devDependencies": {
     "cspell": "^9.6.4",
-    "markdownlint-cli2": "^0.21.0",
+    "markdownlint-cli2": "^0.23.3",
     "markdownlint-rule-helpers": "^0.30.0",
     "markdownlint-rule-no-shortcut-ref-link": "^0.4.0",
     "markdownlint": "^0.40.0",
